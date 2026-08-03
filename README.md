@@ -1,0 +1,2 @@
+# astrbot_plugin_lottery_enhanced
+astrbot_plugin_lottery_enhanced：抽奖插件增强版
