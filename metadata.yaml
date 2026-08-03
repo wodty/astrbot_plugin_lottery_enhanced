@@ -12,7 +12,6 @@ support_platforms:
   - qq_official
 tags:
   - 抽奖
-  - 群管
 version: v2.3.0
 help: |
   【抽奖插件 v2.3 命令列表】
