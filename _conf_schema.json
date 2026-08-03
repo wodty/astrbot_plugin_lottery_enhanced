@@ -1,0 +1,177 @@
+{
+    "prize_config": {
+        "description": "默认奖品配置（各等级奖品的默认名称和数量）",
+        "hint": "开启抽奖时默认使用此配置。运行时可通过「添加奖品」「删除奖品」「设置奖品」命令动态调整类目",
+        "type": "object",
+        "items": {
+            "special": {
+                "description": "特等奖",
+                "type": "object",
+                "items": {
+                    "name": {
+                        "description": "奖品名称",
+                        "type": "string",
+                        "default": "键盘"
+                    },
+                    "count": {
+                        "description": "奖品数量",
+                        "type": "int",
+                        "slider": {
+                            "min": 0,
+                            "max": 10,
+                            "step": 1
+                        },
+                        "default": 1
+                    }
+                }
+            },
+            "first": {
+                "description": "一等奖",
+                "type": "object",
+                "items": {
+                    "name": {
+                        "description": "奖品名称",
+                        "type": "string",
+                        "default": "U盘"
+                    },
+                    "count": {
+                        "description": "奖品数量",
+                        "type": "int",
+                        "slider": {
+                            "min": 0,
+                            "max": 50,
+                            "step": 1
+                        },
+                        "default": 3
+                    }
+                }
+            },
+            "second": {
+                "description": "二等奖",
+                "type": "object",
+                "items": {
+                    "name": {
+                        "description": "奖品名称",
+                        "type": "string",
+                        "default": "小风扇"
+                    },
+                    "count": {
+                        "description": "奖品数量",
+                        "type": "int",
+                        "slider": {
+                            "min": 0,
+                            "max": 100,
+                            "step": 1
+                        },
+                        "default": 5
+                    }
+                }
+            },
+            "third": {
+                "description": "三等奖",
+                "type": "object",
+                "items": {
+                    "name": {
+                        "description": "奖品名称",
+                        "type": "string",
+                        "default": "钥匙扣"
+                    },
+                    "count": {
+                        "description": "奖品数量",
+                        "type": "int",
+                        "slider": {
+                            "min": 0,
+                            "max": 100,
+                            "step": 1
+                        },
+                        "default": 10
+                    }
+                }
+            },
+            "participate": {
+                "description": "参与奖",
+                "type": "object",
+                "items": {
+                    "name": {
+                        "description": "奖品名称",
+                        "type": "string",
+                        "default": "明信片"
+                    },
+                    "count": {
+                        "description": "奖品数量",
+                        "type": "int",
+                        "slider": {
+                            "min": 0,
+                            "max": 1000,
+                            "step": 1
+                        },
+                        "default": 200
+                    }
+                }
+            }
+        }
+    },
+    "lottery_notice": {
+        "description": "开启抽奖提示配置",
+        "hint": "开启抽奖时发送到群聊的提示消息，支持变量替换：{conditions} 开奖条件、{prizes} 奖品列表、{requirements} 参与要求",
+        "type": "object",
+        "items": {
+            "enable_notice": {
+                "description": "是否启用自定义提示消息",
+                "type": "bool",
+                "default": true
+            },
+            "notice_message": {
+                "description": "提示消息模板（留空则使用默认模板。变量：{conditions} {prizes} {requirements}）",
+                "type": "string",
+                "default": ""
+            }
+        }
+    },
+    "lottery_settings": {
+        "description": "抽奖活动默认设置",
+        "hint": "开启抽奖时，如果未指定参数则使用此默认值",
+        "type": "object",
+        "items": {
+            "default_max_participants": {
+                "description": "默认满人开奖人数（0 = 手动开奖）",
+                "type": "int",
+                "slider": {
+                    "min": 0,
+                    "max": 500,
+                    "step": 1
+                },
+                "default": 0
+            },
+            "default_min_level": {
+                "description": "默认最低群等级（0 = 不限）",
+                "type": "int",
+                "slider": {
+                    "min": 0,
+                    "max": 100,
+                    "step": 1
+                },
+                "default": 0
+            },
+            "default_min_role": {
+                "description": "默认最低身份要求",
+                "type": "string",
+                "default": "member",
+                "options": [
+                    {
+                        "label": "不限",
+                        "value": "member"
+                    },
+                    {
+                        "label": "管理员",
+                        "value": "admin"
+                    },
+                    {
+                        "label": "群主",
+                        "value": "owner"
+                    }
+                ]
+            }
+        }
+    }
+}
