@@ -12,7 +12,7 @@ support_platforms:
   - qq_official
 tags:
   - 抽奖
-version: v2.3.1
+version: v2.3.2
 help: |
   【抽奖插件 v2.3 命令列表】
 
