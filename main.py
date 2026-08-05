@@ -248,12 +248,12 @@ class LotteryPlugin(Star):
         """删除奖品类目
 
         用法：删除奖品 <奖项名称>
-        示例：删除奖品 参与奖
+        示例：删除奖品 三等奖
         """
         if not level_name:
             level_name = self._get_args(event, "删除奖品")
         if not level_name:
-            yield event.plain_result("请指定要删除的奖项名称，示例：删除奖品 参与奖")
+            yield event.plain_result("请指定要删除的奖项名称，示例：删除奖品 三等奖")
             return
 
         ok, msg = self.manager.remove_prize(event.get_group_id(), level_name)
@@ -267,9 +267,9 @@ class LotteryPlugin(Star):
 
         用法：设置奖品 <奖项名称> <奖品名称> <数量>
         示例：
-          设置奖品 特等奖 iPhone15 2
-          设置奖品 一等奖 蓝牙耳机 5
-          设置奖品 幸运奖 公仔 20
+          设置奖品 一等奖 iPhone15 2
+          设置奖品 二等奖 蓝牙耳机 5
+          设置奖品 三等奖 钥匙扣 10
         """
         message_str = self._get_args(event, "设置奖品")
 
@@ -279,9 +279,9 @@ class LotteryPlugin(Star):
             yield event.plain_result(
                 "格式错误\n"
                 "正确示例：\n"
-                "  设置奖品 特等奖 iPhone15 2\n"
-                "  设置奖品 幸运奖 公仔 20\n"
-                "  设置奖品 一等奖 我的奖品 5"
+                "  设置奖品 一等奖 iPhone15 2\n"
+                "  设置奖品 二等奖 蓝牙耳机 5\n"
+                "  设置奖品 三等奖 钥匙扣 10"
             )
             return
 
@@ -428,16 +428,6 @@ class LotteryPlugin(Star):
         else:
             lines.append("  默认最低等级：不限")
         lines.append(f"  默认最低身份：{ROLE_NAMES.get(info['default_min_role'], info['default_min_role'])}")
-        lines.append("")
-
-        # 开启提示配置
-        lines.append("📢 开启提示配置：")
-        lines.append(f"  自定义提示：{'已启用' if info['notice_enabled'] else '已关闭'}")
-        if info["notice_template"]:
-            lines.append("  消息模板：")
-            lines.append(f"    {info['notice_template']}")
-        else:
-            lines.append("  消息模板：（使用默认模板）")
 
         yield event.plain_result("\n".join(lines))
 

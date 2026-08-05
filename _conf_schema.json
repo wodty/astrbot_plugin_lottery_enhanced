@@ -1,30 +1,9 @@
 {
     "prize_config": {
-        "description": "默认奖品配置（各等级奖品的默认名称和数量）",
-        "hint": "开启抽奖时默认使用此配置。运行时可通过「添加奖品」「删除奖品」「设置奖品」命令动态调整类目",
+        "description": "默认奖品配置",
+        "hint": "开启抽奖时不会自动加载这些奖品，管理员需通过「添加奖品」命令手动设置。此配置仅作为展示和未来扩展使用。",
         "type": "object",
         "items": {
-            "special": {
-                "description": "特等奖",
-                "type": "object",
-                "items": {
-                    "name": {
-                        "description": "奖品名称",
-                        "type": "string",
-                        "default": "键盘"
-                    },
-                    "count": {
-                        "description": "奖品数量",
-                        "type": "int",
-                        "slider": {
-                            "min": 0,
-                            "max": 10,
-                            "step": 1
-                        },
-                        "default": 1
-                    }
-                }
-            },
             "first": {
                 "description": "一等奖",
                 "type": "object",
@@ -43,6 +22,11 @@
                             "step": 1
                         },
                         "default": 3
+                    },
+                    "color": {
+                        "description": "转盘对应颜色",
+                        "type": "string",
+                        "default": "#D91E1C"
                     }
                 }
             },
@@ -64,6 +48,11 @@
                             "step": 1
                         },
                         "default": 5
+                    },
+                    "color": {
+                        "description": "转盘对应颜色",
+                        "type": "string",
+                        "default": "#007CC2"
                     }
                 }
             },
@@ -85,46 +74,13 @@
                             "step": 1
                         },
                         "default": 10
-                    }
-                }
-            },
-            "participate": {
-                "description": "参与奖",
-                "type": "object",
-                "items": {
-                    "name": {
-                        "description": "奖品名称",
-                        "type": "string",
-                        "default": "明信片"
                     },
-                    "count": {
-                        "description": "奖品数量",
-                        "type": "int",
-                        "slider": {
-                            "min": 0,
-                            "max": 1000,
-                            "step": 1
-                        },
-                        "default": 200
+                    "color": {
+                        "description": "转盘对应颜色",
+                        "type": "string",
+                        "default": "#DD167B"
                     }
                 }
-            }
-        }
-    },
-    "lottery_notice": {
-        "description": "开启抽奖提示配置",
-        "hint": "开启抽奖时发送到群聊的提示消息，支持变量替换：{conditions} 开奖条件、{prizes} 奖品列表、{requirements} 参与要求",
-        "type": "object",
-        "items": {
-            "enable_notice": {
-                "description": "是否启用自定义提示消息",
-                "type": "bool",
-                "default": true
-            },
-            "notice_message": {
-                "description": "提示消息模板（留空则使用默认模板。变量：{conditions} {prizes} {requirements}）",
-                "type": "string",
-                "default": ""
             }
         }
     },

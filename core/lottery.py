@@ -346,11 +346,9 @@ class LotteryManager:
         # 如果配置未加载（AstrBot 未自动填充默认值），使用硬编码默认值
         if not self.template:
             self.template = {
-                "特等奖": {"name": "键盘", "count": 1},
-                "一等奖": {"name": "U盘", "count": 3},
-                "二等奖": {"name": "小风扇", "count": 5},
-                "三等奖": {"name": "钥匙扣", "count": 10},
-                "参与奖": {"name": "明信片", "count": 200},
+                "一等奖": {"name": "U盘", "count": 3, "color": "#D91E1C"},
+                "二等奖": {"name": "小风扇", "count": 5, "color": "#007CC2"},
+                "三等奖": {"name": "钥匙扣", "count": 10, "color": "#DD167B"},
             }
             logger.info("[Lottery] 配置未加载，使用硬编码默认奖品模板")
         else:
@@ -358,11 +356,9 @@ class LotteryManager:
             has_prizes = any(cfg["count"] > 0 for cfg in self.template.values())
             if not has_prizes:
                 self.template = {
-                    "特等奖": {"name": "键盘", "count": 1},
-                    "一等奖": {"name": "U盘", "count": 3},
-                    "二等奖": {"name": "小风扇", "count": 5},
-                    "三等奖": {"name": "钥匙扣", "count": 10},
-                    "参与奖": {"name": "明信片", "count": 200},
+                    "一等奖": {"name": "U盘", "count": 3, "color": "#D91E1C"},
+                    "二等奖": {"name": "小风扇", "count": 5, "color": "#007CC2"},
+                    "三等奖": {"name": "钥匙扣", "count": 10, "color": "#DD167B"},
                 }
                 logger.info("[Lottery] 所有奖品数量为 0，使用硬编码默认奖品模板")
 
@@ -371,11 +367,6 @@ class LotteryManager:
         self.default_max_participants = settings.get("default_max_participants", 0)
         self.default_min_level = settings.get("default_min_level", 0)
         self.default_min_role = settings.get("default_min_role", "member")
-
-        # 读取开启抽奖提示配置
-        notice_cfg = config.get("lottery_notice") or {}
-        self.notice_enabled = notice_cfg.get("enable_notice", True)
-        self.notice_template = notice_cfg.get("notice_message", "").strip()
 
         self.persistence = persistence
         self.persistence.load(self)
@@ -433,9 +424,9 @@ class LotteryManager:
         msg += (
             "\n\n⚠️ 当前还没有配置任何奖品！\n"
             "请先添加奖项后再让群友参与：\n"
-            "  添加奖品 特等奖 iPhone15 2\n"
-            "  添加奖品 一等奖 蓝牙耳机 5\n"
-            "  添加奖品 幸运奖 公仔 10\n"
+            "  添加奖品 一等奖 iPhone15 2\n"
+            "  添加奖品 二等奖 蓝牙耳机 5\n"
+            "  添加奖品 三等奖 钥匙扣 10\n"
             "\n💡 添加完成后，发送「参加抽奖」即可参与"
         )
         return True, msg
@@ -711,6 +702,4 @@ class LotteryManager:
             "default_max_participants": self.default_max_participants,
             "default_min_level": self.default_min_level,
             "default_min_role": self.default_min_role,
-            "notice_enabled": self.notice_enabled,
-            "notice_template": self.notice_template or "",
         }
