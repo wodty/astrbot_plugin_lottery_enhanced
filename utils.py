@@ -1,3 +1,4 @@
+from astrbot.api import logger
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import (
     AiocqhttpMessageEvent,
@@ -13,7 +14,8 @@ async def get_nickname(event: AstrMessageEvent, user_id: str) -> str:
                 group_id=int(event.get_group_id()), user_id=int(user_id)
             )
             return all_info.get("card") or all_info.get("nickname") or user_id
-        except Exception:
+        except Exception as e:
+            logger.debug(f"[Lottery] 获取群昵称失败，使用 user_id 替代: {e}")
             return user_id
     return user_id
 
@@ -35,6 +37,7 @@ async def get_member_info(event: AstrMessageEvent, user_id: str) -> tuple[int, s
             level = int(info.get("level", 0))
             role = info.get("role", "member")
             return level, role
-        except Exception:
+        except Exception as e:
+            logger.debug(f"[Lottery] 获取群成员信息失败，使用默认值: {e}")
             return 0, "member"
     return 0, "member"

@@ -114,18 +114,14 @@
                 "type": "string",
                 "default": "member",
                 "options": [
-                    {
-                        "label": "不限",
-                        "value": "member"
-                    },
-                    {
-                        "label": "管理员",
-                        "value": "admin"
-                    },
-                    {
-                        "label": "群主",
-                        "value": "owner"
-                    }
+                    "member",
+                    "admin",
+                    "owner"
+                ],
+                "labels": [
+                    "不限",
+                    "管理员",
+                    "群主"
                 ]
             }
         }

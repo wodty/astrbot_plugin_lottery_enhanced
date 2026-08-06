@@ -27,7 +27,7 @@ class LotteryPlugin(Star):
         self.context = context
         self.config = config
         self.lottery_data_file = (
-            StarTools.get_data_dir("astrbot_plugin_lottery") / "lottery_data.json"
+            StarTools.get_data_dir() / "lottery_data.json"
         )
         self.persistence = LotteryPersistence(str(self.lottery_data_file))
         self.manager = LotteryManager(self.persistence, config)
@@ -39,7 +39,9 @@ class LotteryPlugin(Star):
         # 记录已确认强制开奖的群（人数未满时需二次确认）
         self._force_draw_pending: set[str] = set()
 
-        # 恢复定时开奖任务
+    @filter.on_astrbot_loaded()
+    async def on_astrbot_loaded(self):
+        """AstrBot 加载完成后，恢复定时开奖任务"""
         self._restore_auto_draw_tasks()
 
     # ==================== 内部方法 ====================
@@ -65,12 +67,11 @@ class LotteryPlugin(Star):
         for group_id, activity in self.manager.activities.items():
             if activity.is_active and not activity.is_drawn and activity.end_time:
                 try:
-                    loop = asyncio.get_event_loop()
-                    task = loop.create_task(self._schedule_auto_draw(group_id))
+                    task = asyncio.create_task(self._schedule_auto_draw(group_id))
                     self._auto_draw_tasks[group_id] = task
                     logger.debug(f"[Lottery] 恢复群 {group_id} 的定时开奖任务")
-                except RuntimeError:
-                    pass
+                except RuntimeError as e:
+                    logger.warning(f"[Lottery] 恢复群 {group_id} 定时开奖任务失败: {e}")
 
     async def _schedule_auto_draw(self, group_id: str):
         """定时开奖后台任务"""
@@ -197,16 +198,16 @@ class LotteryPlugin(Star):
 
         try:
             self._umos[group_id] = event.unified_msg_origin
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(f"[Lottery] 获取 unified_msg_origin 失败: {e}")
 
         if end_time:
             self._cancel_auto_draw_task(group_id)
             try:
                 task = asyncio.create_task(self._schedule_auto_draw(group_id))
                 self._auto_draw_tasks[group_id] = task
-            except RuntimeError:
-                pass
+            except RuntimeError as e:
+                logger.warning(f"[Lottery] 创建定时开奖任务失败: {e}")
 
         yield event.plain_result(msg)
 
